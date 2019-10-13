@@ -1,0 +1,4 @@
+build/
+git_python.egg-info/
+.pypirc
+pypi.py
