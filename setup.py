@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
     name="git-python",
-    version="1.0.2",
+    version="1.0.3",
     description="combination and simplification of some useful git commands",
     long_description="""
     1. add and commit

@@ -23,7 +23,6 @@ def parser_gp():
     addc.add_argument("-m", help="commit message", required=True)
 
     args = parser.parse_args()
-    print("m" in args)
     if "m" in args:
         gitpython.add_and_commit(args.m)
     
