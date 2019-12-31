@@ -17,7 +17,7 @@ class GPushM:
             print("Tag Not Added!")
 
 def gaddc(message):
-    with open("h", "w") as f: f.write("j")
+    print(os.path.dirname(__file__))
     git = repo.git
     git.add(".")
     git.commit("-m", message)
