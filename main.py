@@ -3,9 +3,21 @@ import argparse
 
 from git import Repo
 
-repo = Repo(".")
+repo = Repo(os.getcwd())
+
+class GPushM:
+    def __init__(self):
+        pass
+    
+    def add_tag(tag):
+        more[tag] = {}
+    
+    def add_tag_remote(tag, remote):
+        if tag not in more:
+            print("Tag Not Added!")
 
 def gaddc(message):
+    with open("h", "w") as f: f.write("j")
     git = repo.git
     git.add(".")
     git.commit("-m", message)
@@ -18,7 +30,6 @@ def parser_gp():
     addc.add_argument("-m", "--message", help="commit message", required=True)
 
     args = parser.parse_args()
-    print(args)
     if "message" in args:
         gaddc(args.message)
     
