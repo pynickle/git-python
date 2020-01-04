@@ -8,4 +8,12 @@ Usage
 
 1. add and commit
 
-  gp addc -m "message"
+  gp addc -m <message>
+
+2. push as tag
+
+  gp pushc addt -t <tag>
+
+  gp pushc addr -t <tag> -n <name> -r <remote>
+
+  gp pushc pusht -t <tag>

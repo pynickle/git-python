@@ -1,3 +1,4 @@
+include config.json
 include *.py
 include *.rst
 include .pypirc
