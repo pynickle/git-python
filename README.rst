@@ -5,12 +5,18 @@ combination and simplification of some useful git commands
 
 Usage
 *****
+	
+1. init a gp repo
 
-1. add and commit
+  gp init
+  
+  gp init -d <dir>
+
+2. add and commit
 
   gp addc -m <message>
 
-2. push as tag
+3. push as tag
 
   gp pushc addt -t <tag>
 

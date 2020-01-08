@@ -4,23 +4,26 @@ import json
 import argparse
 
 from git import Repo
+  
+cdir = os.getcwd() + "/.git"
 
-try:
-    repo = Repo(".")
-except InvalidGitRepositoryError:
-    print("Invalid or Not a Git Repo")
-    exit()
-git = repo.git
-cdir = os.path.dirname(__file__)
-
+def init(dir):
+    if dir == ".":
+        gpdir = cdir
+    else:
+        gpdir = os.path.join(dir, ".git")
+    with open(gpdir+"/config.json", "w") as f:
+        f.write("{}")
+        
 class GPushC:
-    def __init__(self):
+    def __init__(self, git):
         with open(cdir+"/config.json", "r") as f:
             content = json.load(f)
-        self.c = content      
-        
+        self.c = content
+        self.git = git
+                
     def update_json(self, data):
-        with open(cdir+"/config.json", "w") as f:
+        with open(cdir+"/config.json", "r+") as f:
             json.dump(data, f)
     
     def add_tag(self, tag):
@@ -36,17 +39,23 @@ class GPushC:
         
     def push_tag(self, tag):
          for tag in self.c[tag].values():
-             git.push(tag)
-         
-gpushc = GPushC()
+             self.git.push(tag)
 
-def gaddc(message):
-    git.add(".")
-    git.commit("-m", message)
+class Simplify:
+    def __init__(self, git):
+        self.git = git
+    
+    def gaddc(self, message):
+        self.git.add(".")
+        self.git.commit("-m", message)
 
 def parser_gp():
     parser = argparse.ArgumentParser(description="combination and simplification of some useful git commands")
+        
     subparser = parser.add_subparsers(help="main commands")
+    
+    gpinit = subparser.add_parser("init", help="make it a gp directory")
+    gpinit.add_argument("-d", "--dir", help="init which dir", default=".", dest="dir")
     
     pushc = subparser.add_parser("pushc", help="push as tags")
     pushc_sub = pushc.add_subparsers(help="pushc", dest="pushc")
@@ -57,15 +66,31 @@ def parser_gp():
     pushc_addr.add_argument("-n", "--name", help="the name for the remote", required=True)
     pushc_addr.add_argument("-r", "--remote", help="the git repo url", required=True)
     pushc_pusht = pushc_sub.add_parser("pusht", help="push the change to each of tag")
-    pushc_pusht.add_argument("-t", "--tag", help="push as a tag")
+    pushc_pusht.add_argument("-t", "--tag", help="push as a tag", required=True)
 
     addc = subparser.add_parser("addc", help="add and commit")
     addc.add_argument("-m", "--message", help="commit message", required=True)
 
     args = parser.parse_args()
+    print(args)
+    
+    if "dir" in args:
+        init(args.dir)
+        exit()
+    
+    try:
+        repo = Repo(".")
+    except Exception as e:
+        print("Invalid or Not a Git Repo")
+        exit()
+   
+    git = repo.git
+    gpushc = GPushC(git)
+    simplify = Simplify(git)
+    
     if "message" in args:
-        gaddc(args.message)
-    if "pushc" in args:
+        simplify.gaddc(args.message)
+    elif "pushc" in args:
         if args.pushc == "addt":
             gpushc.add_tag(args.tag)
         elif args.pushc == "addr":

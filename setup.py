@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="git-python",
-    version="1.1.1",
+    version="1.1.2",
     description="combination and simplification of some useful git commands",
     long_description = open("README.rst").read(),
     author='code-nick-python',
@@ -13,7 +13,6 @@ setup(
     packages=find_packages(),
     platforms="any",
     py_modules=['main'],
-    data_files=['config.json'],
     install_requires=[
         'gitpython'
     ],
